@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "@firebase/auth": "^1.10.1",
+    "@react-navigation/native": "^7.1.8",
+    "@react-navigation/native-stack": "^7.3.12",
+    "cli": "^1.0.1",
+    "expo": "^53.0.7",
+    "firebase": "^11.6.1",
+    "react-dom": "19.0.0",
+    "react-native-web": "^0.20.0",
+    "@expo/metro-runtime": "~5.0.4"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.3",
+    "@types/react": "~19.0.10"
+  }
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contador de Evento - Ano Novo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <h1>Contagem Regressiva Ano Novo! </h1>
+</header>
+
+<main>
+  <div id="contador">00d 00h 00m 00s</div>
+  <div id="barra-progresso-container">
+    <div id="barra-progresso"></div>
+  </div>
+  <div id="mensagem-final" class="escondido"></div>
+</main>
+
+<footer>
+  <p>© 2025 Seu Evento</p>
+</footer>
+
+<audio id="som-final" src="audio/sino.mp3" preload="auto"></audio>
+
+<script>
+(() => {
+    const dataAlvo = new Date(2025, 11, 31, 23, 59, 59); // 31 de Dezembro de 2025
+  const mensagemFinal = "🎉 Feliz Ano Novo! 🎉";
+
+  const contadorEl = document.getElementById("contador");
+  const barraProgressoEl = document.getElementById("barra-progresso");
+  const mensagemFinalEl = document.getElementById("mensagem-final");
+  const somFinalEl = document.getElementById("som-final");
+
+  const tempoInicio = new Date();
+
+  function zeroEsquerda(num) {
+    return num < 10 ? "0" + num : num;
+  }
+
+  function atualizar() {
+    const agora = new Date();
+    const diff = dataAlvo - agora;
+    const totalTempo = dataAlvo - tempoInicio;
+    const progresso = 1 - diff / totalTempo;
+    const larguraBarra = Math.min(Math.max(progresso, 0), 1) * 100;
+    barraProgressoEl.style.width = larguraBarra + "%";
+
+    if (diff <= 0) {
+      contadorEl.classList.add("escondido");
+      barraProgressoEl.style.width = "100%";
+      mensagemFinalEl.textContent = mensagemFinal;
+      mensagemFinalEl.classList.remove("escondido");
+
+      if (somFinalEl) {
+        somFinalEl.play().catch(() => {
+          console.warn("Som bloqueado pelo navegador.");
+        });
+      }
+      clearInterval(intervalo);
+      return;
+    }
+
+    const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((diff % (1000 * 60)) / 1000);
+
+    contadorEl.textContent = `${zeroEsquerda(dias)}d ${zeroEsquerda(horas)}h ${zeroEsquerda(minutos)}m ${zeroEsquerda(segundos)}s`;
+  }
+
+  atualizar();
+  const intervalo = setInterval(atualizar, 1000);
+})();
+</script>
+
+</body>
+</html>

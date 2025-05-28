@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contador Regressivo Personalizado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Anton', sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    #controle {
+      margin-bottom: 30px;
+    }
+    #controle input {
+      width: 100px;
+      padding: 15px;
+      font-size: 1.5rem;
+      text-align: center;
+      margin: 0 10px;
+      border: none;
+      border-radius: 10px;
+    }
+    #controle button {
+      padding: 15px 25px;
+      font-size: 1.5rem;
+      margin-left: 20px;
+      background-color: #444;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    #contador {
+      font-size: 8rem;
+      letter-spacing: 5px;
+      background-color: #111;
+      padding: 40px 60px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+      cursor: pointer;
+      user-select: none;
+    }
+    #alterar {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.2rem;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #222;
+      color: #fff;
+      cursor: pointer;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <button id="alterar">Alterar Horário</button>
+  <div id="controle">
+    <input type="number" id="minutos" placeholder="Minutos" />
+    <input type="number" id="segundos" placeholder="Segundos" />
+    <button onclick="iniciarContagem()">Iniciar</button>
+  </div>
+  <div id="contador">00:00</div>
+
+  <script>
+    let intervalo;
+    let pausado = false;
+    let tempoRestante = 0;
+    const contador = document.getElementById("contador");
+    const controle = document.getElementById("controle");
+    const alterarBtn = document.getElementById("alterar");
+
+    function iniciarContagem() {
+      const minutos = parseInt(document.getElementById("minutos").value) || 0;
+      const segundos = parseInt(document.getElementById("segundos").value) || 0;
+      tempoRestante = (minutos * 60) + segundos;
+
+      if (tempoRestante <= 0) return;
+
+      controle.style.display = "none";
+      alterarBtn.style.display = "block";
+
+      clearInterval(intervalo);
+      pausado = false;
+      atualizarDisplay();
+
+      intervalo = setInterval(() => {
+        if (!pausado) {
+          tempoRestante--;
+          if (tempoRestante < 0) {
+            clearInterval(intervalo);
+            return;
+          }
+          atualizarDisplay();
+        }
+      }, 1000);
+    }
+
+    function atualizarDisplay() {
+      const min = String(Math.floor(tempoRestante / 60)).padStart(2, '0');
+      const seg = String(tempoRestante % 60).padStart(2, '0');
+      contador.textContent = `${min}:${seg}`;
+    }
+
+    alterarBtn.addEventListener("click", () => {
+      clearInterval(intervalo);
+      controle.style.display = "flex";
+      alterarBtn.style.display = "none";
+      pausado = false;
+      tempoRestante = 0;
+      contador.textContent = "00:00";
+    });
+
+    contador.addEventListener("click", () => {
+      if (tempoRestante > 0) {
+        pausado = !pausado;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,66 +1,162 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .container {
-            width: 300px;
-            height: 100px;
-            perspective: 1000px;
-        }
-        .cartao {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transition: transform 0.8s;
-            transform-style: preserve-3d;
-            cursor: pointer;
-        }
-        .cartao.virado {
-            transform: rotateY(180deg);
-        }
-        .frente, .verso{
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 15px;
-            backface-visibility: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .frente {
-            background-color: red;
-        }
-        .verso{
-            background-color: green;
-            transform: rotateY(180deg);
-            text-align: center;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>🎁 Cartões Interativos</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .card {
+      width: 220px;
+      height: 140px;
+      perspective: 1000px;
+    }
+
+    .inner-card {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .card:hover .inner-card {
+      transform: rotateY(180deg);
+    }
+
+    .front, .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backface-visibility: hidden;
+      color: white;
+      font-size: 1.1rem;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .back {
+      transform: rotateY(180deg);
+    }
+
+    /* Cores e temas */
+    .birthday .front { background: #ff6b81; }
+    .birthday .back { background: #ff4757; }
+
+    .christmas .front { background: #2ecc71; }
+    .christmas .back { background: #27ae60; }
+
+    .mothersday .front { background: #e056fd; }
+    .mothersday .back { background: #be2edd; }
+
+    .valentines .front { background: #ff7979; }
+    .valentines .back { background: #eb4d4b; }
+
+    .newyear .front { background: #f9ca24; color: #333; }
+    .newyear .back { background: #f6e58d; color: #333; }
+
+    .easter .front { background: #7ed6df; color: #333; }
+    .easter .back { background: #70a1ff; }
+
+    .teacher .front { background: #5352ed; }
+    .teacher .back { background: #3742fa; }
+
+    .sorry .front { background: #95a5a6; }
+    .sorry .back { background: #7f8c8d; }
+
+    .motivational .front { background: #00cec9; }
+    .motivational .back { background: #00b894; }
+
+    .junina .front { background: #ff9f43; }
+    .junina .back { background: #e58e26; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="cartao" id="cartao">
-            <div class="frente">
-                Frente do cartão
-            </div>
-            <div class="verso" id="mensagemVerso">
-            </div>
-        </div>
+
+  <!-- Cartões -->
+  <div class="card birthday">
+    <div class="inner-card">
+      <div class="front">🎉 Feliz Aniversário!</div>
+      <div class="back">Que seu dia seja tão incrível quanto você! 🥳</div>
     </div>
-    <script>
-        const cartao = document.getElementById("cartao")
-        const mensagemVerso = document.getElementById("mensagemVerso")
+  </div>
 
-        const mensagem = "Verso do cartão"
+  <div class="card christmas">
+    <div class="inner-card">
+      <div class="front">🎄 Feliz Natal!</div>
+      <div class="back">Paz, amor e muitas rabanadas! 🎁</div>
+    </div>
+  </div>
 
-        mensagemVerso.textContent = mensagem
-        cartao.addEventListener("click", () => {
-            cartao.classList.toggle("virado")
-        })
-    </script>
+  <div class="card mothersday">
+    <div class="inner-card">
+      <div class="front">🌸 Dia das Mães</div>
+      <div class="back">Você é o coração da nossa família! 💖</div>
+    </div>
+  </div>
+
+  <div class="card valentines">
+    <div class="inner-card">
+      <div class="front">❤️ Dia dos Namorados</div>
+      <div class="back">Te amo mais a cada dia! 💌</div>
+    </div>
+  </div>
+
+  <div class="card newyear">
+    <div class="inner-card">
+      <div class="front">🎆 Feliz Ano Novo</div>
+      <div class="back">Novos sonhos, novos começos! ✨</div>
+    </div>
+  </div>
+
+  <div class="card easter">
+    <div class="inner-card">
+      <div class="front">🐣 Feliz Páscoa</div>
+      <div class="back">Que a renovação invada seu coração! 🍫</div>
+    </div>
+  </div>
+
+  <div class="card teacher">
+    <div class="inner-card">
+      <div class="front">📚 Dia do Professor</div>
+      <div class="back">Obrigado por compartilhar sabedoria! 👩‍🏫</div>
+    </div>
+  </div>
+
+  <div class="card sorry">
+    <div class="inner-card">
+      <div class="front">😔 Desculpa...</div>
+      <div class="back">Errei. Quero consertar. Me perdoa? 🙏</div>
+    </div>
+  </div>
+
+  <div class="card motivational">
+    <div class="inner-card">
+      <div class="front">💪 Você Consegue!</div>
+      <div class="back">Continue. Você está mais perto do que imagina. 🚀</div>
+    </div>
+  </div>
+
+  <div class="card junina">
+    <div class="inner-card">
+      <div class="front">🎊 Festa Junina</div>
+      <div class="back">Viva São João! Bora dançar quadrilha! 🌽</div>
+    </div>
+  </div>
+
 </body>
 </html>

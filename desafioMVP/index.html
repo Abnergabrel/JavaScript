@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>🏀 Desafio do MVP</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom, #1C1F26, #2D3142);
+      color: #fff;
+      text-align: center;
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .container {
+      background-color: #2D3142;
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+    input {
+      padding: 10px;
+      font-size: 1rem;
+      width: 100px;
+      margin-right: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 1rem;
+      background-color: #FF833D;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff6b1a;
+    }
+
+    #mensagem, #historico {
+      margin-top: 20px;
+      font-size: 1.2rem;
+    }
+
+    #reiniciar {
+      margin-top: 30px;
+      display: none;
+      background-color: #4F5D75;
+    }
+  </style>
+</head>
+<body>
+  <h1>🏀 Desafio do MVP</h1>
+  <div class="container">
+    <p>O MVP está usando uma camisa numerada entre <strong>1 e 100</strong>.<br> Tente adivinhar qual é antes que o cronômetro estoure (10 jogadas)! ⏱️</p>
+
+    <input type="number" id="palpite" min="1" max="100" placeholder="Seu chute">
+    <button onclick="tentar()" id="btnTentar">Arremessar! 🎯</button>
+
+    <div id="mensagem"></div>
+    <div id="historico"><strong>Tentativas:</strong> 🧾</div>
+
+    <button onclick="reiniciarJogo()" id="reiniciar">🔄 Nova Partida</button>
+  </div>
+
+  <script>
+    let numeroSecreto = Math.floor(Math.random() * 100) + 1;
+    let tentativas = 0;
+    const maxTentativas = 10;
+    let historico = [];
+
+    function tentar() {
+      const palpite = Number(document.getElementById('palpite').value);
+      const mensagem = document.getElementById('mensagem');
+      const historicoDiv = document.getElementById('historico');
+      const btn = document.getElementById('btnTentar');
+
+      if (palpite < 1 || palpite > 100 || isNaN(palpite)) {
+        mensagem.textContent = "⛔ Digite um número válido entre 1 e 100!";
+        return;
+      }
+
+      tentativas++;
+      historico.push(palpite);
+
+      if (palpite === numeroSecreto) {
+        mensagem.innerHTML = `🏆 Acertou! A camisa era <strong>#${numeroSecreto}</strong>! Você venceu em ${tentativas} jogadas.`;
+        btn.disabled = true;
+        document.getElementById('palpite').disabled = true;
+        document.getElementById('reiniciar').style.display = 'inline-block';
+      } else if (tentativas >= maxTentativas) {
+        mensagem.innerHTML = `💥 Fim de jogo! O número era <strong>#${numeroSecreto}</strong>.`;
+        btn.disabled = true;
+        document.getElementById('palpite').disabled = true;
+        document.getElementById('reiniciar').style.display = 'inline-block';
+      } else {
+        let dica = palpite < numeroSecreto ? "🔺 Mais alto!" : "🔻 Mais baixo!";
+        mensagem.innerHTML = `❌ Nada feito, armador! ${dica} (${maxTentativas - tentativas} arremessos restantes)`;
+      }
+
+      historicoDiv.innerHTML = `<strong>Tentativas:</strong> 🧾 ${historico.join(', ')}`;
+      document.getElementById('palpite').value = "";
+    }
+
+    function reiniciarJogo() {
+      numeroSecreto = Math.floor(Math.random() * 100) + 1;
+      tentativas = 0;
+      historico = [];
+      document.getElementById('mensagem').textContent = "";
+      document.getElementById('historico').innerHTML = "<strong>Tentativas:</strong> 🧾";
+      document.getElementById('palpite').disabled = false;
+      document.getElementById('btnTentar').disabled = false;
+      document.getElementById('palpite').value = "";
+      document.getElementById('reiniciar').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

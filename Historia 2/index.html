@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Floresta Mágica</title>
+</head>
+<body>
+    <h1>🌲 A Floresta Mágica</h1>
+    <div id="historia">
+        <p>Você está na frente de uma floresta misteriosa. Deseja continuar?</p>
+        <button onclick="escolha1('sim')">🌳 Entrar na floresta</button>
+        <button onclick="escolha1('nao')">🏠 Voltar para casa</button>
+    </div>
+
+    <script>
+        function escolha1(resposta) {
+            const div = document.getElementById("historia");
+            if (resposta === "sim") {
+                div.innerHTML = `
+                    <p>🌿 Você entrou na floresta e encontrou dois caminhos. Qual deseja seguir?</p>
+                    <button onclick="escolha2('esquerda')">⬅️ Caminho da esquerda</button>
+                    <button onclick="escolha2('direita')">➡️ Caminho da direita</button>
+                `;
+            } else {
+                div.innerHTML = `<p>🏠 Você foi para casa e dormiu em segurança. FIM.</p>`;
+            }
+        }
+
+        function escolha2(caminho) {
+            const div = document.getElementById("historia");
+            if (caminho === "esquerda") {
+                div.innerHTML = `
+                    <p>🐉 Um dragão aparece no seu caminho! O que você faz?</p>
+                    <button onclick="escolha3('lutar')">⚔️ Lutar</button>
+                    <button onclick="escolha3('fugir')">🏃‍♂️ Fugir</button>
+                `;
+            } else {
+                div.innerHTML = `
+                    <p>📦 Você encontrou um baú mágico. Deseja abrir?</p>
+                    <button onclick="escolha3('abrir')">🔓 Abrir</button>
+                    <button onclick="escolha3('ignorar')">🚶‍♂️ Ignorar</button>
+                `;
+            }
+        }
+
+        function escolha3(acao) {
+            const div = document.getElementById("historia");
+            switch (acao) {
+                case "lutar":
+                    div.innerHTML = `
+                        <p>🔥 Você derrotou o dragão com coragem! Dentro da caverna dele, há uma porta secreta. Entrar?</p>
+                        <button onclick="escolha4('entrar')">🚪 Entrar</button>
+                        <button onclick="escolha4('voltar')">🔙 Voltar para floresta</button>
+                    `;
+                    break;
+                case "fugir":
+                    div.innerHTML = `<p>😓 Você fugiu e voltou para a entrada da floresta. FIM.</p>`;
+                    break;
+                case "abrir":
+                    div.innerHTML = `
+                        <p>💰 Dentro do baú há uma chave dourada! Usar para abrir um portal próximo?</p>
+                        <button onclick="escolha4('portal')">🌀 Usar chave no portal</button>
+                        <button onclick="escolha4('guardar')">📦 Guardar chave e seguir andando</button>
+                    `;
+                    break;
+                case "ignorar":
+                    div.innerHTML = `<p>🚶‍♀️ Você continua andando, mas se perde na floresta e nunca é encontrado. FIM.</p>`;
+                    break;
+            }
+        }
+
+        function escolha4(decisao) {
+            const div = document.getElementById("historia");
+            switch (decisao) {
+                case "entrar":
+                    div.innerHTML = `
+                        <p>👑 Você entrou em uma sala secreta cheia de artefatos mágicos. Um livro brilhante chama sua atenção. Ler?</p>
+                        <button onclick="escolha5('ler')">📖 Ler o livro</button>
+                        <button onclick="escolha5('naoler')">🙈 Ignorar o livro</button>
+                    `;
+                    break;
+                case "voltar":
+                    div.innerHTML = `<p>🏃‍♂️ Você voltou para a floresta, mas se perdeu e foi devorado por lobos. FIM.</p>`;
+                    break;
+                case "portal":
+                    div.innerHTML = `
+                        <p>✨ O portal te leva a um reino escondido no céu! Um guardião pergunta se deseja ficar ali para sempre.</p>
+                        <button onclick="escolha5('ficar')">😇 Ficar no reino</button>
+                        <button onclick="escolha5('voltarTerra')">🌍 Voltar para a Terra</button>
+                    `;
+                    break;
+                case "guardar":
+                    div.innerHTML = `<p>📜 Você guardou a chave, mas nunca encontrou seu uso. FIM.</p>`;
+                    break;
+            }
+        }
+
+        function escolha5(final) {
+            const div = document.getElementById("historia");
+            switch (final) {
+                case "ler":
+                    div.innerHTML = `<p>📚 Ao ler o livro, você ganha o poder de moldar a realidade! Se torna o protetor da floresta. FIM ÉPICO!</p>`;
+                    break;
+                case "naoler":
+                    div.innerHTML = `<p>🤷‍♂️ Você ignora o livro e sai da caverna... mas a floresta desaparece atrás de você. FIM.</p>`;
+                    break;
+                case "ficar":
+                    div.innerHTML = `<p>👼 Você vive uma vida eterna de paz e sabedoria no reino celestial. FIM FELIZ!</p>`;
+                    break;
+                case "voltarTerra":
+                    div.innerHTML = `<p>🌍 Você volta para a Terra com memórias incríveis, mas ninguém acredita em você. FIM.</p>`;
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
